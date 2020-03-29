@@ -34,16 +34,22 @@ var events = allEvents{
 // Main
 func main() {
 	app := app{}
-	app.initializeApp()
+	app.initApp()
+	app.initRoutes()
 }
 
 // Utils
-func (app *app) initializeApp() {
+func (app *app) initApp() {
 	app.Router = mux.NewRouter().StrictSlash(true)
 	app.Router.HandleFunc("/", homelink)
 	app.Router.HandleFunc("/", createEvent).Methods("POST")
 	log.Println("Listening on port 8080...")
 	log.Fatal(http.ListenAndServe(":8080", app.Router))
+}
+
+func (app *app) initRoutes() {
+	app.Router.HandleFunc("/", homelink)
+	app.Router.HandleFunc("/", createEvent).Methods("POST")
 }
 
 // Handlers
